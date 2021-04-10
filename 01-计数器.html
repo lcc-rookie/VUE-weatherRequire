@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="time">
+        <h1>{{message}}</h1>
+        <h2>当前数字：{{counter}}</h2>
+        <!-- <button v-on:click='increment'>+</button>
+        <button v-on:click='decrement'>-</button> -->
+        <button @click='decrement'>-</button>
+        <button @click='increment'>+</button>
+
+    </div>
+    <script src="../js/vue.js"></script>
+    <script>
+        const app = new Vue({
+            el: '#time',
+            data: {
+                counter: 0,
+                message: '哈哈哈哈',
+            },
+            methods: {
+                increment: function () {
+                    console.log('加');
+                    this.counter++;
+                },
+                decrement: function () {
+                    console.log('减');
+                    this.counter--;
+                }
+            }
+        })
+    </script>
+
+
+</body>
+
+</html>

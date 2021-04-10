@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    {{fnum1}}
+    <mycpn :fcnum1="fnum1" :fcnum2="fnum2" @input1="finput1" @input2="finput2"></mycpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+
+      <input type="text" name="" id="" :value="cnum1" @input="numinput1">
+      <h5>子组件的data{{cnum1}}</h5>
+      <h5>zi组件中的profs{{fcnum1}}</h5>
+
+      <br>
+      <input type="text" name="" id="" :value="cnum2" @input="numinput2">
+      <h5>子组件的data:{{cnum2}}</h5>
+      <h5>zi组件中的profs{{fcnum2}}</h5>
+    </div>
+  </template>
+  <script src='../js/vue.js'></script>
+  <script>
+    // vue实例，父组件
+    const app = new Vue({
+      el: '#app',
+      data: {
+        fnum1: 1,
+        fnum2: 0
+      },
+      methods: {
+        finput1(num1) {
+          this.fnum1 = parseInt(num1);;
+          console.log(this.fnum1);
+        },
+        finput2(num2) {
+          this.fnum2 = parseInt(num2);
+        }
+      },
+
+      // 子组件
+      components: {
+        mycpn: {
+          template: '#cpn',
+          props: {
+            fcnum1: Number,
+            fcnum2: Number,
+          },
+          data() {
+            return {
+              cnum1: this.fcnum1,
+              cnum2: this.fcnum2,
+            }
+          },
+          methods: {
+            numinput1(e) {
+              this.cnum1 = e.target.value;
+              this.$emit('input1', this.cnum1);
+              this.cnum2 = this.cnum1 * 100;
+              this.$emit('input2', this.cnum2);
+            },
+            numinput2(e) {
+              this.cnum2 = e.target.value;
+              this.$emit('input2', this.cnum2)
+            }
+          }
+        }
+
+      }
+    }
+    )
+
+
+  </script>
+</body>
+
+</html>

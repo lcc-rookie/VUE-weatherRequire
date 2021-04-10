@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书购物车</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        table {
+            margin: 100px auto;
+            border: 1px solid grey;
+            text-align: center;
+        }
+
+        thead {
+            background-color: #aaa;
+        }
+
+        th,
+        td {
+            border-collapse: collapse;
+            padding: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <table cellpadding="0" cellspacing="0" v-if="books.length">
+            <thead>
+                <th>id</th>
+                <th>名字</th>
+                <th>价格</th>
+                <th>购买数量</th>
+                <th>操作</th>
+            </thead>
+
+            <tbody>
+                <tr v-for="(index,book) in books" @click="delbook(index)">
+                    <td>{{book.id}}</td>
+                    <td>{{book.name}}</td>
+                    <td>￥{{book.price.toFixed(2)}}</td>
+                    <td><button @click="decrement(index)" :disabled="book.count===1">-</button> {{book.count}}
+                        <button @click="increment(index)">+</button>
+                    </td>
+                    <td><button>移除</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2 v-if="books.length">书的总价格是{{totalprice}}</h2>
+        <h2 v-else>购物车为空</h2>
+    </div>
+    <script src='../js/vue.js'></script>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                books: [{
+                    id: 1,
+                    name: '《JavaScript高级程序设计》',
+                    price: 90.00,
+                    count: 1
+                }, {
+                    id: 2,
+                    name: '《vue.js实战》',
+                    price: 35.00,
+                    count: 1
+                }, {
+                    id: 3,
+                    name: '《java算法设计与分析》',
+                    price: 110.00,
+                    count: 1
+                }, {
+                    id: 4,
+                    name: '《CSS权威指南》',
+                    price: 114.00,
+                    count: 1
+                }]
+
+
+
+            },
+
+            methods: {
+                decrement: function (index) {
+                    console.log("减");
+
+                    this.books[index].count--;
+                },
+                increment: function (index) {
+                    console.log("加");
+                    this.books[index].count++;
+
+                },
+
+                delbook(index) {
+                    console.log(index);
+                    this.books.splice(index, 1);
+                }
+            },
+            computed: {
+                totalprice: function () {
+                    var total = 0;
+                    for (let book of this.books) {
+                        total += book.price * book.count;
+                    }
+                    return total;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

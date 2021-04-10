@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>父子组件-父传子</title>
+</head>
+
+<body>
+  <div id="app">
+    <mycpn :cname="name" :cage="age"></mycpn>
+  </div>
+
+  <template id="cpn">
+    <h1>名字是{{cname}},年龄是{{cage}}</h1>
+  </template>
+  <script src='../js/vue.js'></script>
+  <script>
+
+    const app = new Vue({
+      el: '#app',
+      data: {
+        name: "祝央",
+        age: 18,
+      },
+      methods: {
+      },
+      components: {
+        mycpn: {
+          props: ['cname', 'cage'],
+          template: '#cpn'
+        },
+      }
+
+
+    }
+    )
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>子传父-自定义事件</title>
+</head>
+
+<body>
+  <div id="app">
+
+    <mycpn @incre="change" @decre="change"></mycpn>
+    <mycpn @incre="change" @decre="change" :fcount="ccounter"></mycpn>
+    <mycpn @incre="change" @decre="change" v-model="total"></mycpn>
+  </div>
+
+  <template id="cpn">
+    <div>
+      <button @click="decrement">-</button>{{total}}
+      <button @click="increment">+</button>
+      {{ccounter}}
+
+    </div>
+
+  </template>
+  <script src='../js/vue.js'></script>
+  <script>
+
+    // vue实例，父组件
+    let app = new Vue({
+      el: '#app',
+      props: ['fcount'],
+      data: {
+        total: 0,
+      },
+      methods: {
+        change(counter) {
+
+          this.total = counter;
+        }
+      },
+
+      // 子组件
+      components: {
+        'mycpn': {
+          template: '#cpn',
+          data() {
+            return {
+              ccounter: 1,
+            }
+          },
+
+          methods: {
+            increment() {
+              this.ccounter++;
+              console.log(this.ccounter);
+              this.$emit('increment', this.ccounter)
+            },
+
+            decrement() {
+              this.ccounter--;
+              this.$emit('decrement', this.ccounter)
+
+            }
+          }
+        },
+
+      }
+    }
+    )
+  </script>
+</body>
+
+</html>
